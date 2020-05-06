@@ -31,7 +31,7 @@ class Timer(ttk.Frame):
         )
         self.skipButton.grid(row = 0, column = 1, sticky = "E", padx = 10, pady = (10, 0))
         
-        timerDescription = ttk.Label(self, textvariable = self.currentTimerLabel, style = "LightText.TLabel")
+        timerDescription = ttk.Label(self, textvariable = self.currentTimerLabel, style = "SessionText.TLabel")
         timerDescription.grid(row = 0, column = 0, sticky = "W", padx = (10, 0), pady = (10, 0))
         
         timerFrame = ttk.Frame(self, height = "100", style = "Timer.TFrame")
@@ -87,24 +87,25 @@ class Timer(ttk.Frame):
         self.controller.timerSchedule.rotate(-1)
         nextUp = self.controller.timerSchedule[0]
         self.currentTimerLabel.set(nextUp)
-
-        if nextUp == "Pomodoro":
-            pomodoroTime = int(self.controller.pomodoro.get())
-            self.currentTime.set(f"{pomodoroTime:02d}:00")
-        elif nextUp == "Short Break":
-            shortBreakTime = int(self.controller.shortBreak.get())
-            self.currentTime.set(f"{shortBreakTime:02d}:00")
-        elif nextUp == "Long Break":
-            longBreakTime = int(self.controller.longBreak.get())
-            self.currentTime.set(f"{longBreakTime:02d}:00")
+        self.timerSet(nextUp)
         
     def resetTimer(self):
         self.stopTimer()
-        pomodoroTime = int(self.controller.pomodoro.get())
-        self.currentTime.set(f"{pomodoroTime:02d}:00")
-        self.timerSchedule = deque(self.controller.timerOrder)
-        self.currentTimerLabel.set(self.controller.timerSchedule[0])
-       
+        currentSession = self.controller.timerSchedule[0]
+        self.currentTimerLabel.set(currentSession)
+        self.timerSet(currentSession)
+        
+    def timerSet(self, session):
+        if session == "Pomodoro":
+            pomodoroTime = int(self.controller.pomodoro.get())
+            self.currentTime.set(f"{pomodoroTime:02d}:00")
+        elif session == "Short Break":
+            shortBreakTime = int(self.controller.shortBreak.get())
+            self.currentTime.set(f"{shortBreakTime:02d}:00")
+        elif session == "Long Break":
+            longBreakTime = int(self.controller.longBreak.get())
+            self.currentTime.set(f"{longBreakTime:02d}:00")
+    
     def decrementTime(self):
         currentTime = self.currentTime.get()
         

@@ -32,10 +32,16 @@ class PomodoroTimer(tk.Tk):
         )
         
         style.configure(
-            "LightText.TLabel",
+            "SessionText.TLabel",
             background = COLOUR_PRIMARY,
             foreground = COLOUR_LIGHT_TEXT,
             font = "TkDefaultFont 12 bold"
+        )
+        
+        style.configure(
+            "LightText.TLabel",
+            background = COLOUR_PRIMARY,
+            foreground = COLOUR_LIGHT_TEXT,
         )
         
         style.configure(
